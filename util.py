@@ -6,6 +6,7 @@ def get_software():
     rst =[]
     for each in rst_list:
         rst.append(each[0])
+    return  rst
 def uninstall_software(software_name):
     rst_list = get_reg_value.get_all_installed_software()
     uninstall_string=""
@@ -19,5 +20,3 @@ def uninstall_software(software_name):
     else:
         print("uninstall "+ software_name)
         os.system(uninstall_string)
-if __name__ == '__main__':
-    uninstall_software("USBPcap 1.2.0.4")
