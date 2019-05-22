@@ -6,29 +6,34 @@ from flask import request
 from util import  *
 def __cache__server__():
     app=Flask(__name__)
-
+    
     @app.route("/uninstall",methods=["POST"])
     def getdata():
         rst={}
+        uninstall_string = None
         if not request.json:
             return jsonify({"msg":"Needed Json Request"})
-        try:
+        #try:
             '''
             {'app':'chrome'}
             '''
+        else:
             inputJson = request.json
-            app = inputJson['app']
+            ap = inputJson['app']
             softwares = get_software()
             for each in softwares:
-                print(each)
-                if app in each:
-                    print("uninstall %s"%app)
-                    #uninstall_software(each)
-                    return jsonify({'msg':'success'})
-            return jsonify({'msg':'error'})
-        except:
-            return jsonify({"msg":"Needed correct Json Request"})
-
+                #print(each)
+                if ap in each:
+                    print("uninstall %s"%ap)
+                    uninstall_string = each
+                    break
+					#return jsonify({'msg':'success'})
+            
+        #except:
+        if uninstall_string != None:
+            uninstall_software(uninstall_string)
+            return jsonify({'msg':'success'})
+        return jsonify({'msg':'error'})
     app.run(host="0.0.0.0",port=int(9999))
 if __name__ == '__main__':
     __cache__server__()
