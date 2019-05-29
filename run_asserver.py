@@ -4,6 +4,7 @@ from flask import  Flask
 from flask import jsonify
 from flask import request
 from util import  *
+import  pyautogui as pag
 def __cache__server__():
     app=Flask(__name__)
     
@@ -27,8 +28,29 @@ def __cache__server__():
                     print("uninstall %s"%ap)
                     uninstall_string = each
                     break
-					#return jsonify({'msg':'success'})
+                    #return jsonify({'msg':'success'})
             
+        #except:
+        if uninstall_string != None:
+            uninstall_software(uninstall_string)
+            return jsonify({'msg':'success'})
+        return jsonify({'msg':'error'})
+    
+    @app.route("/typewrite",methods=["POST"])
+    def typewrite():
+        rst={}
+        uninstall_string = None
+        if not request.json or "typemsg" not in request.json:
+            return jsonify({"msg":"Needed Json Request"})
+        #try:
+            '''
+            {'typemsg':'www.baidu.com'}
+            '''
+        else:
+            inputJson = request.json
+            string = inputJson['typemsg']
+            pag.typewrite(string)
+
         #except:
         if uninstall_string != None:
             uninstall_software(uninstall_string)
